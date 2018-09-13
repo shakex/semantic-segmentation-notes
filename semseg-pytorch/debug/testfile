@@ -1,0 +1,93 @@
+import numpy as np
+import scipy.misc as m
+from skimage import io,color
+import matplotlib.pyplot as plt
+
+
+def get_brainweb_labels():
+    """Load the mapping that associates brainweb classes
+
+    Returns:
+        np.ndarray (4)
+
+    0: Background(BG)
+    1: Cerebro-Spinal Fluid(CSF)
+    37: Grey Matter(GM)
+    73: White Matter(WM)
+    """
+    return np.asarray([0, 1, 37, 73])
+
+
+def get_brainweb_colormap():
+    return np.asarray([[0, 0, 0], [30, 2, 1], [90, 13, 7], [148, 44, 20]])
+
+
+def encode_segmap(mask):
+    """Encode segmentation label images as pascal classes
+
+    Args:
+        mask (np.ndarray): raw segmentation label image of dimension
+          (M, N, 3), in which the Pascal classes are encoded as colours.
+
+    Returns:
+        (np.ndarray): class map with dimensions (M,N), where the value at
+        a given location is the integer denoting the class index.
+    """
+
+    mask = mask.astype(np.uint8)
+    label_mask = np.zeros((mask.shape[0], mask.shape[1]), dtype=np.uint8)
+    for ii, label in enumerate(get_brainweb_labels()):
+        label_mask[np.where((mask == (np.zeros((mask.shape[0], mask.shape[1]), dtype=np.uint8) + label)))] = ii * 85
+        # x1 = (mask == (np.zeros((mask.shape[0], mask.shape[1]), dtype=np.uint8) + label))
+        # print(mask)
+        # print(x1)
+    label_mask = label_mask.astype(np.uint8)
+    return label_mask
+
+
+def decode_segmap(label_mask, plot=False):
+    """Decode segmentation class labels into a color image
+
+    Args:
+
+    Returns:
+
+    """
+    label_colors = get_brainweb_colormap()
+    r = label_mask.copy()
+    g = label_mask.copy()
+    b = label_mask.copy()
+    for ll in range(0, 4):
+        r[label_mask == ll] = label_colors[ll, 0]
+        g[label_mask == ll] = label_colors[ll, 1]
+        b[label_mask == ll] = label_colors[ll, 2]
+    rgb = np.zeros((label_mask.shape[0], label_mask.shape[1], 3))
+    rgb[:, :, 0] = r / 255.0
+    rgb[:, :, 1] = g / 255.0
+    rgb[:, :, 2] = b / 255.0
+    if plot:
+        plt.imshow(rgb)
+        plt.show()
+    else:
+        return rgb
+
+
+# x = np.array([[0,1,2],[3,4,5],[6,7,8]])
+#
+# y = x[:,:,::-1]
+# print(x)
+# print(y)
+
+
+
+for i in range(1, 182):
+    lbl_path = '/Users/shake/Documents/dataset/BrainWeb/raw/MS Lesion Brain Database/ground truth/msles3_crisp/msles3_crisp_t' + str(i).zfill(3) + '.bmp'
+    # print(lbl_path)
+    lbl = io.imread(lbl_path)
+    lbl = np.array(lbl, dtype=np.uint8)
+    mask_lbl = encode_segmap(lbl)
+    # io.imsave('/Users/shake/Documents/dataset/BrainWeb/train/gt_encode/crisp_y'+str(i).zfill(3) + '.bmp', mask_lbl)
+    # color_lbl = decode_segmap(mask_lbl)
+    io.imsave('/Users/shake/Documents/dataset/BrainWeb/raw/MS Lesion Brain Database/ground truth/msles3_c4/msles3_crisp_t' + str(i).zfill(3) + '.bmp', mask_lbl)
+
+

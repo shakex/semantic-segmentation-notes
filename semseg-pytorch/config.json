@@ -1,0 +1,46 @@
+{
+  "pascal":
+  {
+    "data_path": "/Users/shake/Documents/dataset/VOCdevkit/VOC2012/"
+  },
+
+  "sbd":
+  {
+    "data_path": "/Users/shake/Documents/dataset/benchmark_RELEASE/"
+  },
+
+  "brainweb":
+  {
+    "data_path": "/home/jwliu/disk/dataset/BrainWeb/"
+  },
+
+  "camvid":
+  {
+    "data_path": "/Users/meet/data/CamVid/"
+  },
+
+  "ade20k":
+  {
+    "data_path": "/home/meet/datasets/ADE20K/"
+  },
+
+  "mit_sceneparsing_benchmark":
+  {
+    "data_path": "/home/ubuntu/DATA/ADEChallengeData2016/"
+  },
+
+  "nyuv2":
+  {
+    "data_path": "/home/meet/datasets/NYUv2/"
+  },
+
+  "sunrgbd":
+  {
+    "data_path": "/home/meet/datasets/SUNRBGD/"
+  },
+
+  "cityscapes":
+  {
+    "data_path": "/home/meet/datasets/cityscapes/"
+  }
+}

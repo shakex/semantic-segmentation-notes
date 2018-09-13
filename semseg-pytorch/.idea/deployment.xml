@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" createEmptyFolders="true">
+    <serverData>
+      <paths name="jwliu@49.52.10.208:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/jwliu/disk/kxie/semseg-pytorch" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
